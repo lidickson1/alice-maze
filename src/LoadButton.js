@@ -1,5 +1,4 @@
 import React from "react";
-import CellType from "./CellType";
 
 class LoadButton extends React.Component {
     constructor(props) {
@@ -27,7 +26,7 @@ class LoadButton extends React.Component {
             <div>
                 <button
                     type="button"
-                    className="btn btn-outline-primary"
+                    className="btn btn-primary"
                     onClick={this.onClick}
                 >
                     Load

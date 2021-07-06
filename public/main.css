@@ -1,12 +1,13 @@
 :root {
     --size: 2;
-    --cell-size: 50px;
+    --cell-size: 80px;
 }
 
 .maze {
     display: grid;
     grid-template-columns: repeat(var(--size), var(--cell-size));
     max-width: calc(var(--size) * var(--cell-size) + 4px);
+    /* max-height: calc(var(--size) * var(--cell-size) + 4px); */
     grid-gap: 0;
     border-style: solid;
     border-width: 2px;

@@ -37,6 +37,7 @@ export class ColorButtons extends React.Component {
                                 this.props.selected.color === color
                             }
                             disabled={this.props.selected === null}
+                            readOnly
                         />
                         <label htmlFor={name}>
                             {name.charAt(0) + name.slice(1).toLowerCase()}

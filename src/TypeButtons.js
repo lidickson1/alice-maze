@@ -25,6 +25,7 @@ class TypeButtons extends React.Component {
                                 this.props.selected.cellType === value
                             }
                             disabled={this.props.selected === null}
+                            readOnly
                         />
                         <label htmlFor={name}>
                             {name.charAt(0) + name.slice(1).toLowerCase()}

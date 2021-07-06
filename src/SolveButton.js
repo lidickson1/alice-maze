@@ -1,7 +1,7 @@
 import React from "react";
 import CellType from "./CellType";
 import { Colors } from "./Color";
-// import { cloneDeep } from "lodash";
+import directions from "./Directions";
 
 class SolveButton extends React.Component {
     constructor(props) {
@@ -17,17 +17,6 @@ class SolveButton extends React.Component {
         // const goal = maze.find((element) => element.cellType === CellType.GOAL);
         const queue = [{ cell: start, stepSize: 1, path: [start], depth: 0 }];
         const visited = new Map();
-
-        const directions = [
-            [0, -1],
-            [1, -1],
-            [1, 0],
-            [1, 1],
-            [0, 1],
-            [-1, 1],
-            [-1, 0],
-            [-1, -1],
-        ];
 
         //each key is the depth of BFS tree
         const solvedSteps = {};

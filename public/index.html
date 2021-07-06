@@ -2,9 +2,9 @@
 <html lang="en">
     <head>
         <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css"
             rel="stylesheet"
-            integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+            integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
             crossorigin="anonymous"
         />
 
@@ -12,9 +12,125 @@
     </head>
     <body>
         <div class="container">
-            <h1 class="text-center pb-3">Alice Maze</h1>
+            <h1 class="display-3 text-center pt-3">Alice Mazes</h1>
+            <p>
+                Alice mazes are logic mazes invented by
+                <a
+                    href="https://www.logicmazes.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Robert Abbott</a
+                >. The naming comes from a scene in Alice in Wonderland where
+                Alice eats a piece of cake with the sign "Eat Me" and grows
+                larger, then she drinks from a bottle marked "Drink Me" and
+                becomes smaller. This is reflected in the maze where the
+                distance you travel in a move will get larger or smaller,
+                depending on the colour of the arrows.
+            </p>
+            <h2>Rules</h2>
+            <p>
+                You start a maze on the pink square, and your current position
+                is always outlined in green. You must make a series of moves
+                that will take you to the goal. You can only move into squares
+                according to the arrows in your current square. For example,
+                having an arrow pointing to the left means you can move to the
+                square left of your current position. You click on a green
+                square to move onto it. You may not land on blank squares.
+                <br /><br />
+                The step size determines the distance you travel per move. When
+                the maze begins, your step size is 1. Therefore, if you
+                travelled left, you would land 1 square to left of your current
+                position. If the step size is 2, you would land 2 squares to the
+                left and so on. When you land on a square with red arrows, your
+                step size is increased by 1. When you land on a square with
+                yellow arrows, your step size is decreased by 1. If the step
+                size is 0, then you cannot make anymore moves and the maze is
+                over.
+                <br /><br />
+                The pagination allows you to navigate between the moves you have
+                made. You can select a previously made move and change it by
+                selecting a different square. Note that this will erase all
+                subsequent moves from that point.
+            </p>
             <div id="root"></div>
         </div>
+
+        <div class="modal fade" id="solvedModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Congratulations!</h5>
+                        <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                        >
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">You have solved the maze!</div>
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-dismiss="modal"
+                        >
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="noSolutionModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">:(</h5>
+                        <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                        >
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">This maze has no solution</div>
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-dismiss="modal"
+                        >
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="bg-light text-center text-lg-start mt-5 pt-3 pb-3">
+            <!-- Copyright -->
+            <div class="text-center p-3">
+                Built by Dickson Li with React and Bootstrap. Contact me on
+                <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://www.linkedin.com/in/lidickson1/"
+                    >LinkedIn</a
+                >
+                and visit my
+                <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://github.com/lidickson1"
+                    >GitHub</a
+                >
+            </div>
+            <!-- Copyright -->
+        </footer>
 
         <!-- Load React. -->
         <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
@@ -24,6 +140,10 @@
         ></script>
         <script
             src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+            crossorigin
+        ></script>
+        <script
+            src="https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js"
             crossorigin
         ></script>
         <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
