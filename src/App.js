@@ -1,6 +1,6 @@
 import React from "react";
 import CellType from "./CellType";
-import { Colors, getRandomColor, ColorButtons } from "./Color";
+import { Colors, ColorButtons } from "./Color";
 import SolveButton from "./SolveButton";
 import SizeChanger from "./SizeChanger";
 import TypeButtons from "./TypeButtons";
@@ -13,7 +13,7 @@ import Tabs from "./Tabs";
 import { Modal } from "bootstrap";
 import directions from "./Directions";
 import Restart from "./Restart";
-import { levels, Levels } from "./Levels";
+import { exampleMaze, Levels } from "./Levels";
 
 class App extends React.Component {
     constructor(props) {
@@ -81,7 +81,7 @@ class App extends React.Component {
         this.getAdjacentCells = this.getAdjacentCells.bind(this);
 
         // this.setupPlay();
-        setTimeout(() => this.loadMaze(levels[0]), 1); //lol or else it crashes
+        setTimeout(() => this.loadMaze(exampleMaze), 1); //lol or else it crashes
 
         document
             .querySelector(":root")
@@ -160,6 +160,8 @@ class App extends React.Component {
                 size: size,
                 solvedSteps: null,
                 stepButton: 1,
+                playedSteps: [[0, 0]],
+                playedStep: 0,
             },
             () => this.setupPlay()
         );
@@ -206,6 +208,7 @@ class App extends React.Component {
     }
 
     updateSelected(x, y) {
+        const index = y * this.state.size + x;
         if (this.state.selectedTab === "play") {
             const findCell = this.getAdjacentCells(
                 ...this.state.playedSteps[this.state.playedStep]
@@ -215,42 +218,37 @@ class App extends React.Component {
             } else if (findCell.cellType === CellType.GOAL) {
                 this.state.solvedModal.show();
             }
-        }
-        this.setState((state) => {
-            const index = y * state.size + x;
-            let stepSize = state.stepSize;
-            if (this.state.selectedTab === "play") {
-                stepSize = this.state.playedSteps[this.state.playedStep][1];
-                if (this.state.data[index].color === Colors.RED) {
+            this.setState((state) => {
+                let stepSize = state.playedSteps[state.playedStep][1];
+                if (state.data[index].color === Colors.RED) {
                     stepSize++;
-                } else if (this.state.data[index].color === Colors.YELLOW) {
+                } else if (state.data[index].color === Colors.YELLOW) {
                     stepSize--;
                 }
-            }
-            return {
+                return {
+                    selectedCell: state.selectedCell === index ? null : index,
+                    playedSteps:
+                        state.playedStep + 1 >= state.playedSteps.length
+                            ? [...state.playedSteps, [index, stepSize]]
+                            : [
+                                  ...state.playedSteps.slice(
+                                      0,
+                                      state.playedStep + 1
+                                  ),
+                                  [index, stepSize],
+                              ],
+                    playedStep: state.playedStep + 1,
+                    playedButton:
+                        state.playedStep > state.playedButton
+                            ? state.playedButton + 1
+                            : state.playedButton,
+                };
+            });
+        } else {
+            this.setState((state) => ({
                 selectedCell: state.selectedCell === index ? null : index,
-                // stepSize: stepSize,
-                playedSteps:
-                    state.playedStep + 1 >= state.playedSteps.length
-                        ? [...state.playedSteps, [index, stepSize]]
-                        : [
-                              ...state.playedSteps.slice(
-                                  0,
-                                  state.playedStep + 1
-                              ),
-                              [index, stepSize],
-                              //   ...state.playedSteps.slice(state.playedStep + 2),
-                          ],
-                playedStep:
-                    // state.playedStep === state.playedSteps.length - 1
-                    state.playedStep + 1,
-                // : state.playedStep,
-                playedButton:
-                    state.playedStep > state.playedButton
-                        ? state.playedButton + 1
-                        : state.playedButton,
-            };
-        });
+            }));
+        }
     }
 
     getAdjacentCells(index, stepSize) {
@@ -364,6 +362,11 @@ class App extends React.Component {
     }
 
     setSelectedTab(tab) {
+        if (tab === "play") {
+            this.setState({
+                selectedCell: this.state.playedSteps[this.state.playedStep][0],
+            });
+        }
         this.setState({ selectedTab: tab });
     }
 
@@ -388,6 +391,16 @@ class App extends React.Component {
                         updateStepButton={this.updatePlayedButton}
                     />
                     <Restart restart={this.setupPlay} />
+                    <div class="alert alert-info mt-3" role="alert">
+                        Your current position is outlined in green. Click on a
+                        green square to move onto it. Squares that you have
+                        visited already will be in turquoise. <br />
+                        <br />
+                        The pagination allows you to navigate between the moves
+                        you have made. You can select a previously made move and
+                        change it by selecting a different square. Note that
+                        this will erase all subsequent moves from that point.
+                    </div>
                 </>
             );
         } else if (this.state.selectedTab === "edit") {

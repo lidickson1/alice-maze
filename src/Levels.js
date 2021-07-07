@@ -13,6 +13,10 @@ export const levels = [
     1 62 1 1 R6`,
 ];
 
+export const exampleMaze = `432R G  5Y
+0   0  5
+S02  2  0`;
+
 export class Levels extends React.Component {
     render() {
         return (
