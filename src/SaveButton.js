@@ -57,7 +57,7 @@ class SaveButton extends React.Component {
         return (
             <button
                 type="button"
-                className="btn btn-outline-primary"
+                className="btn btn-primary"
                 onClick={this.onClick}
             >
                 Save

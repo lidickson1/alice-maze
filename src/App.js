@@ -162,6 +162,7 @@ class App extends React.Component {
                 stepButton: 1,
                 playedSteps: [[0, 0]],
                 playedStep: 0,
+                selectedCell: 0, //need to set this first, since the actual selected cell is set in setupPlay, which is in a callback, which means it won't get executed immediately, it is possible that the selected cell was valid in the previous maze, but not in the current maze (i.e. out of bounds)
             },
             () => this.setupPlay()
         );
@@ -456,6 +457,7 @@ class App extends React.Component {
                         ""
                     )}
                 </div>
+                //TODO description of the different colors
             );
         }
         return (

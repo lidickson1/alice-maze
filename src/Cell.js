@@ -19,10 +19,10 @@ export default class Cell extends React.Component {
         //when selected display its paths (even if it is not the solution) (there can be multiple due to step sizes)
         //TODO draw lines and numbers for the paths, because the fact that you can visit a cell multiple times, and that there are multiple step sizes it is impossible to follow with just colors
         let color;
-        if (this.props.cellType === CellType.START) {
-            color = "#FF7FED";
-        } else if (this.props.visit === VisitType.VISITING) {
+        if (this.props.visit === VisitType.VISITING) {
             color = "#66FF66";
+        } else if (this.props.cellType === CellType.START) {
+            color = "#FF7FED";
         } else if (this.props.visit === VisitType.ON_PATH) {
             color = "#33e5b2";
         } else if (this.props.visit === VisitType.VISITED) {
